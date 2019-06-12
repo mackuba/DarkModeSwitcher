@@ -14,7 +14,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
 
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         window = NSWindow(
@@ -24,7 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.center()
         window.setFrameAutosaveName("Main Window")
 
-        window.contentView = NSHostingView(rootView: ContentView())
+        let appList = AppList()
+        appList.loadApps()
+
+        window.contentView = NSHostingView(rootView: ContentView(appList: appList))
 
         window.makeKeyAndOrderFront(nil)
     }

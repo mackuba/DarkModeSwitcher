@@ -8,10 +8,13 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct ContentView: View {
+    @ObjectBinding var appList: AppList
+
     var body: some View {
-        Text("Hello World")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        List(appList.apps.identified(by: \.bundleURL)) { app in
+            Text(app.name)
+        }
     }
 }
 
@@ -19,7 +22,15 @@ struct ContentView : View {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let names = ["Firefox", "Pages", "Slack", "Twitter"]
+        let appList = AppList()
+        appList.apps = names.map {
+            AppModel(
+                bundleURL: URL(string: "/Applications/\($0).app")!
+            )
+        }
+
+        return ContentView(appList: appList)
     }
 }
 #endif
