@@ -20,8 +20,12 @@ struct AppRowView: View {
                     .resizable()
                     .frame(width: iconSize, height: iconSize)
             } else {
-                Color.white
+                Circle()
+                    .fill(Color.gray)
+                    .padding(.all, 2)
                     .frame(width: iconSize, height: iconSize)
+                    .opacity(0.5)
+                    .overlay(Text("?").color(.white).opacity(0.8))
             }
 
             Text(app.name)
