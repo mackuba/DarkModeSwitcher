@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kuba Suder. All rights reserved.
 //
 
+import Cocoa
 import Foundation
 
 class AppScanner {
@@ -40,6 +41,10 @@ class AppScanner {
 
                     let app = AppModel(bundleURL: url)
                     foundApps.append(app)
+
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        self.processApp(app: app)
+                    }
                 }
             } catch {
                 NSLog("Error: couldn't scan applications in %@", "\(folder)")
@@ -47,5 +52,33 @@ class AppScanner {
         }
 
         return foundApps
+    }
+
+    func processApp(app: AppModel) {
+        let plist = app.bundleURL.appendingPathComponent("Contents").appendingPathComponent("Info.plist")
+
+        do {
+            let contents = try Data(contentsOf: plist)
+            let info = try PropertyListDecoder().decode(AppInfo.self, from: contents)
+
+            app.bundleIdentifier = info.bundleIdentifier
+
+            let iconFile =  app.bundleURL
+                .appendingPathComponent("Contents")
+                .appendingPathComponent("Resources")
+                .appendingPathComponent(info.iconFileName)
+
+            app.icon = iconFile.pathExtension.isEmpty ?
+                NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
+                NSImage(contentsOf: iconFile)
+
+            print("Updated app info: \(app)")
+
+            DispatchQueue.main.async {
+                app.didChange.send(())
+            }
+        } catch let error {
+            print("Could not load app info for \(app.name): \(error)")
+        }
     }
 }

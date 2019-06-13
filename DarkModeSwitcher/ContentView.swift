@@ -8,12 +8,25 @@
 
 import SwiftUI
 
+private let iconSize: CGFloat = 32
+
 struct ContentView: View {
     @ObjectBinding var appList: AppList
 
     var body: some View {
         List(appList.apps.identified(by: \.bundleURL)) { app in
-            Text(app.name)
+            HStack {
+                if app.icon != nil {
+                    Image(nsImage: app.icon!)
+                        .resizable()
+                        .frame(width: iconSize, height: iconSize)
+                } else {
+                    Color.white
+                        .frame(width: iconSize, height: iconSize)
+                }
+
+                Text(app.name)
+            }
         }
     }
 }
@@ -25,9 +38,11 @@ struct ContentView_Previews : PreviewProvider {
         let names = ["Firefox", "Pages", "Slack", "Twitter"]
         let appList = AppList()
         appList.apps = names.map {
-            AppModel(
+            let app = AppModel(
                 bundleURL: URL(string: "/Applications/\($0).app")!
             )
+            app.icon = NSImage(named: app.name.lowercased())
+            return app
         }
 
         return ContentView(appList: appList)

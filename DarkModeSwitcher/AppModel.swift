@@ -9,6 +9,8 @@
 import Cocoa
 
 class AppModel: CustomStringConvertible {
+    let didChange = Signal()
+
     let name: String
     let bundleURL: URL
     var icon: NSImage?
