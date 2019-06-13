@@ -12,7 +12,8 @@ import Foundation
 class AppScanner {
 
     var applicationFolders: [URL] {
-        return FileManager.default.urls(for: .applicationDirectory, in: [.userDomainMask, .localDomainMask])
+        return FileManager.default.urls(for: .applicationDirectory, in: .allDomainsMask)
+            + [URL(fileURLWithPath: "/System/Applications")]
     }
 
     func findApps() -> [AppModel] {
