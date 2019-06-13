@@ -66,14 +66,16 @@ class AppScanner {
             DispatchQueue.main.async {
                 app.bundleIdentifier = info.bundleIdentifier
 
-                let iconFile = app.bundleURL
-                    .appendingPathComponent("Contents")
-                    .appendingPathComponent("Resources")
-                    .appendingPathComponent(info.iconFileName)
+                if let iconFileName = info.iconFileName {
+                    let iconFile = app.bundleURL
+                        .appendingPathComponent("Contents")
+                        .appendingPathComponent("Resources")
+                        .appendingPathComponent(iconFileName)
 
-                app.icon = iconFile.pathExtension.isEmpty ?
-                    NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
-                    NSImage(contentsOf: iconFile)
+                    app.icon = iconFile.pathExtension.isEmpty ?
+                        NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
+                        NSImage(contentsOf: iconFile)
+                }
 
                 if let defaultsSetting = defaultsSetting {
                     app.requiresLightMode = defaultsSetting

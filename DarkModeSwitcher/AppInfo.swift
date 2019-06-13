@@ -9,7 +9,7 @@
 import Foundation
 
 struct AppInfo: Codable {
-    let iconFileName: String
+    let iconFileName: String?
     let bundleIdentifier: String
 
     enum CodingKeys: String, CodingKey {
