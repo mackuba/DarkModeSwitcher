@@ -15,19 +15,9 @@ typealias Signal = PassthroughSubject<Void, Never>
 class AppList: BindableObject {
     let didChange = Signal()
 
-    var observers: [Subscribers.Sink<Signal>] = []
-
     var apps: [AppModel] = [] {
         didSet {
             didChange.send(())
-
-            observers = apps.map { app in
-                let appName = app.name
-                return app.didChange.sink { [weak self] in
-                    print("Ping from \(appName)")
-                    self?.didChange.send(())
-                }
-            }
         }
     }
 
