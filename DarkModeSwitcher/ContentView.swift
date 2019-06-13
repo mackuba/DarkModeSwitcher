@@ -8,12 +8,51 @@
 
 import SwiftUI
 
+private let iconSize: CGFloat = 32
+
 struct ContentView: View {
     @ObjectBinding var appList: AppList
 
     var body: some View {
         List(appList.apps.identified(by: \.bundleURL)) { app in
             AppRowView(app: app)
+        }
+    }
+}
+
+struct MissingAppIcon: View {
+    var body: some View {
+        Circle()
+            .fill(Color.gray)
+            .padding(.all, 2)
+            .frame(width: iconSize, height: iconSize)
+            .opacity(0.5)
+            .overlay(Text("?").color(.white).opacity(0.8))
+    }
+}
+
+struct AppRowView: View {
+    @ObjectBinding var app: AppModel
+
+    var body: some View {
+        HStack {
+            if app.icon != nil {
+                Image(nsImage: app.icon!)
+                    .resizable()
+                    .frame(width: iconSize, height: iconSize)
+            } else {
+                MissingAppIcon()
+            }
+
+            Text(app.name)
+
+            Spacer()
+
+            SegmentedControl(selection: $app.modeSwitchSetting) {
+                Text("Auto").tag(AppModel.ModeSwitchSetting.auto)
+                Text("Light").tag(AppModel.ModeSwitchSetting.light)
+            }
+            .frame(width: 200)
         }
     }
 }

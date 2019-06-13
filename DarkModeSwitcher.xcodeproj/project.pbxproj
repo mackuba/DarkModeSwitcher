@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8C8199EF22B26F7200C60158 /* ShellOut in Frameworks */ = {isa = PBXBuildFile; productRef = 8C8199EE22B26F7200C60158 /* ShellOut */; };
 		8C8199F122B2741C00C60158 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8199F022B2741C00C60158 /* Defaults.swift */; };
-		8C8199F322B2777300C60158 /* AppRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8199F222B2777300C60158 /* AppRowView.swift */; };
 		8CBFB3D622B1986000BE244F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFB3D522B1986000BE244F /* AppDelegate.swift */; };
 		8CBFB3D822B1986000BE244F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFB3D722B1986000BE244F /* ContentView.swift */; };
 		8CBFB3DA22B1986000BE244F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CBFB3D922B1986000BE244F /* Assets.xcassets */; };
@@ -23,7 +22,6 @@
 
 /* Begin PBXFileReference section */
 		8C8199F022B2741C00C60158 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
-		8C8199F222B2777300C60158 /* AppRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRowView.swift; sourceTree = "<group>"; };
 		8CBFB3D222B1986000BE244F /* DarkModeSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkModeSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CBFB3D522B1986000BE244F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8CBFB3D722B1986000BE244F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 				8CBFB3EE22B1AA3000BE244F /* AppInfo.swift */,
 				8CBFB3EA22B19B8900BE244F /* AppList.swift */,
 				8CBFB3E822B19B1600BE244F /* AppModel.swift */,
-				8C8199F222B2777300C60158 /* AppRowView.swift */,
 				8CBFB3EC22B19BD900BE244F /* AppScanner.swift */,
 				8CBFB3D722B1986000BE244F /* ContentView.swift */,
 				8C8199F022B2741C00C60158 /* Defaults.swift */,
@@ -178,7 +175,6 @@
 				8CBFB3D622B1986000BE244F /* AppDelegate.swift in Sources */,
 				8CBFB3ED22B19BD900BE244F /* AppScanner.swift in Sources */,
 				8CBFB3EF22B1AA3000BE244F /* AppInfo.swift in Sources */,
-				8C8199F322B2777300C60158 /* AppRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
