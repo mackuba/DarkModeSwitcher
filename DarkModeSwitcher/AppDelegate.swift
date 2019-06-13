@@ -22,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered, defer: false)
         window.center()
         window.setFrameAutosaveName("Main Window")
+        window.title = "Dark Mode Switcher"
 
         let appList = AppList()
         appList.loadApps()
