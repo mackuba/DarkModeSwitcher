@@ -19,11 +19,7 @@ class Defaults {
                 arguments: ["read", bundleIdentifier, RequiresAquaSetting]
             )
 
-            if value == "1" {
-                return true
-            } else if value == "0" {
-                return false
-            }
+            return (value == "1")
         } catch let error as ShellOutError {
             let errorMessage = String(decoding: error.errorData, as: UTF8.self)
 
@@ -39,10 +35,17 @@ class Defaults {
 
     func setRequiresLightMode(_ required: Bool, for bundleIdentifier: String) {
         do {
-            try shellOut(
-                to: "defaults",
-                arguments: ["write", bundleIdentifier, RequiresAquaSetting, "-bool", required ? "true" : "false"]
-            )
+            if required {
+                try shellOut(
+                    to: "defaults",
+                    arguments: ["write", bundleIdentifier, RequiresAquaSetting, "-bool", "true"]
+                )
+            } else {
+                try shellOut(
+                    to: "defaults",
+                    arguments: ["delete", bundleIdentifier, RequiresAquaSetting]
+                )
+            }
         } catch let error {
             print("Error setting default for \(bundleIdentifier): \(error)")
         }
