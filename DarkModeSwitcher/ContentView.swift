@@ -62,6 +62,7 @@ struct AppRowView: View {
                 Text("Auto").tag(AppModel.ModeSwitchSetting.auto)
                 Text("Light").tag(AppModel.ModeSwitchSetting.light)
             }
+            .disabled(app.bundleIdentifier == nil)
             .frame(width: 200)
         }
     }
@@ -76,6 +77,7 @@ struct ContentView_Previews : PreviewProvider {
             let app = AppModel(
                 bundleURL: URL(string: "/Applications/\($0).app")!
             )
+            app.bundleIdentifier = "app.\($0)"
             app.icon = NSImage(named: app.name.lowercased())
             app.needsRestart = (app.name == "Slack")
             return app
