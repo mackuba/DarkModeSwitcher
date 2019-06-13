@@ -61,25 +61,26 @@ class AppScanner {
         do {
             let contents = try Data(contentsOf: plist)
             let info = try PropertyListDecoder().decode(AppInfo.self, from: contents)
-
-            app.bundleIdentifier = info.bundleIdentifier
-
-            let iconFile =  app.bundleURL
-                .appendingPathComponent("Contents")
-                .appendingPathComponent("Resources")
-                .appendingPathComponent(info.iconFileName)
-
-            app.icon = iconFile.pathExtension.isEmpty ?
-                NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
-                NSImage(contentsOf: iconFile)
-
-            if let result = Defaults().checkRequiresLightMode(for: info.bundleIdentifier) {
-                app.requiresLightMode = result
-            }
-
-            print("Updated app info: \(app)")
+            let defaultsSetting = Defaults().checkRequiresLightMode(for: info.bundleIdentifier)
 
             DispatchQueue.main.async {
+                app.bundleIdentifier = info.bundleIdentifier
+
+                let iconFile = app.bundleURL
+                    .appendingPathComponent("Contents")
+                    .appendingPathComponent("Resources")
+                    .appendingPathComponent(info.iconFileName)
+
+                app.icon = iconFile.pathExtension.isEmpty ?
+                    NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
+                    NSImage(contentsOf: iconFile)
+
+                if let defaultsSetting = defaultsSetting {
+                    app.requiresLightMode = defaultsSetting
+                }
+
+                print("Updated app info: \(app)")
+
                 app.didChange.send(())
             }
         } catch let error {
