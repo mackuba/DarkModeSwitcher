@@ -10,6 +10,17 @@ import SwiftUI
 
 private let iconSize: CGFloat = 32
 
+struct MissingAppIcon: View {
+    var body: some View {
+        Circle()
+            .fill(Color.gray)
+            .padding(.all, 2)
+            .frame(width: iconSize, height: iconSize)
+            .opacity(0.5)
+            .overlay(Text("?").color(.white).opacity(0.8))
+    }
+}
+
 struct AppRowView: View {
     @ObjectBinding var app: AppModel
 
@@ -20,12 +31,7 @@ struct AppRowView: View {
                     .resizable()
                     .frame(width: iconSize, height: iconSize)
             } else {
-                Circle()
-                    .fill(Color.gray)
-                    .padding(.all, 2)
-                    .frame(width: iconSize, height: iconSize)
-                    .opacity(0.5)
-                    .overlay(Text("?").color(.white).opacity(0.8))
+                MissingAppIcon()
             }
 
             Text(app.name)
