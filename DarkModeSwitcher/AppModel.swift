@@ -59,7 +59,10 @@ class AppModel: BindableObject, CustomStringConvertible {
             if newValue != modeSwitchSetting {
                 requiresLightMode = (newValue == .light)
                 print("Mode for \(bundleIdentifier) = \(requiresLightMode)")
-                Defaults().setRequiresLightMode(requiresLightMode, for: bundleIdentifier)
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    Defaults().setRequiresLightMode(newValue == .light, for: bundleIdentifier)
+                }
             }
         }
     }
