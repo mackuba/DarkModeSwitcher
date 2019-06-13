@@ -22,7 +22,13 @@ class AppModel: BindableObject, CustomStringConvertible {
     var icon: NSImage?
     var bundleIdentifier: String?
 
-    var requiresLightMode: Bool = false
+    var requiresLightMode: Bool = false {
+        didSet {
+            if requiresLightMode != oldValue {
+                needsRestart = isRunning
+            }
+        }
+    }
 
     var needsRestart: Bool = false {
         didSet {
@@ -50,10 +56,11 @@ class AppModel: BindableObject, CustomStringConvertible {
                 fatalError("No bundleIdentifier set")
             }
 
-            requiresLightMode = (newValue == .light)
-            needsRestart = isRunning
-            print("Mode for \(bundleIdentifier) = \(requiresLightMode)")
-            Defaults().setRequiresLightMode(requiresLightMode, for: bundleIdentifier)
+            if newValue != modeSwitchSetting {
+                requiresLightMode = (newValue == .light)
+                print("Mode for \(bundleIdentifier) = \(requiresLightMode)")
+                Defaults().setRequiresLightMode(requiresLightMode, for: bundleIdentifier)
+            }
         }
     }
 
