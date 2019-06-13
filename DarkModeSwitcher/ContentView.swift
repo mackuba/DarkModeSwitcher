@@ -8,29 +8,15 @@
 
 import SwiftUI
 
-private let iconSize: CGFloat = 32
-
 struct ContentView: View {
     @ObjectBinding var appList: AppList
 
     var body: some View {
         List(appList.apps.identified(by: \.bundleURL)) { app in
-            HStack {
-                if app.icon != nil {
-                    Image(nsImage: app.icon!)
-                        .resizable()
-                        .frame(width: iconSize, height: iconSize)
-                } else {
-                    Color.white
-                        .frame(width: iconSize, height: iconSize)
-                }
-
-                Text(app.name)
-            }
+            AppRowView(app: app)
         }
     }
 }
-
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
