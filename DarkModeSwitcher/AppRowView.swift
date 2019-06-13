@@ -11,7 +11,7 @@ import SwiftUI
 private let iconSize: CGFloat = 32
 
 struct AppRowView: View {
-    let app: AppModel
+    @ObjectBinding var app: AppModel
 
     var body: some View {
         HStack {
@@ -29,6 +29,14 @@ struct AppRowView: View {
             }
 
             Text(app.name)
+
+            Spacer()
+
+            SegmentedControl(selection: $app.modeSwitchSetting) {
+                Text("Auto").tag(AppModel.ModeSwitchSetting.auto)
+                Text("Light").tag(AppModel.ModeSwitchSetting.light)
+            }
+            .frame(width: 200)
         }
     }
 }

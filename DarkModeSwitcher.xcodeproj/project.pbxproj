@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C8199EF22B26F7200C60158 /* ShellOut in Frameworks */ = {isa = PBXBuildFile; productRef = 8C8199EE22B26F7200C60158 /* ShellOut */; };
+		8C8199F122B2741C00C60158 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8199F022B2741C00C60158 /* Defaults.swift */; };
 		8C8199F322B2777300C60158 /* AppRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8199F222B2777300C60158 /* AppRowView.swift */; };
 		8CBFB3D622B1986000BE244F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFB3D522B1986000BE244F /* AppDelegate.swift */; };
 		8CBFB3D822B1986000BE244F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFB3D722B1986000BE244F /* ContentView.swift */; };
@@ -20,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C8199F022B2741C00C60158 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		8C8199F222B2777300C60158 /* AppRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRowView.swift; sourceTree = "<group>"; };
 		8CBFB3D222B1986000BE244F /* DarkModeSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkModeSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CBFB3D522B1986000BE244F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C8199EF22B26F7200C60158 /* ShellOut in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +76,7 @@
 				8C8199F222B2777300C60158 /* AppRowView.swift */,
 				8CBFB3EC22B19BD900BE244F /* AppScanner.swift */,
 				8CBFB3D722B1986000BE244F /* ContentView.swift */,
+				8C8199F022B2741C00C60158 /* Defaults.swift */,
 				8CBFB3D922B1986000BE244F /* Assets.xcassets */,
 				8CBFB3DE22B1986000BE244F /* Main.storyboard */,
 				8CBFB3E122B1986000BE244F /* Info.plist */,
@@ -105,6 +110,9 @@
 			dependencies = (
 			);
 			name = DarkModeSwitcher;
+			packageProductDependencies = (
+				8C8199EE22B26F7200C60158 /* ShellOut */,
+			);
 			productName = DarkModeSwitcher;
 			productReference = 8CBFB3D222B1986000BE244F /* DarkModeSwitcher.app */;
 			productType = "com.apple.product-type.application";
@@ -133,6 +141,9 @@
 				Base,
 			);
 			mainGroup = 8CBFB3C922B1986000BE244F;
+			packageReferences = (
+				8C8199ED22B26F7200C60158 /* XCRemoteSwiftPackageReference "ShellOut" */,
+			);
 			productRefGroup = 8CBFB3D322B1986000BE244F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -161,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CBFB3D822B1986000BE244F /* ContentView.swift in Sources */,
+				8C8199F122B2741C00C60158 /* Defaults.swift in Sources */,
 				8CBFB3EB22B19B8900BE244F /* AppList.swift in Sources */,
 				8CBFB3E922B19B1600BE244F /* AppModel.swift in Sources */,
 				8CBFB3D622B1986000BE244F /* AppDelegate.swift in Sources */,
@@ -363,6 +375,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8C8199ED22B26F7200C60158 /* XCRemoteSwiftPackageReference "ShellOut" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/ShellOut";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8C8199EE22B26F7200C60158 /* ShellOut */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C8199ED22B26F7200C60158 /* XCRemoteSwiftPackageReference "ShellOut" */;
+			productName = ShellOut;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8CBFB3CA22B1986000BE244F /* Project object */;
 }

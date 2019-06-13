@@ -73,6 +73,10 @@ class AppScanner {
                 NSImage(contentsOf: iconFile.appendingPathExtension("icns")) :
                 NSImage(contentsOf: iconFile)
 
+            if let result = Defaults().checkRequiresLightMode(for: info.bundleIdentifier) {
+                app.requiresLightMode = result
+            }
+
             print("Updated app info: \(app)")
 
             DispatchQueue.main.async {

@@ -7,8 +7,14 @@
 //
 
 import Cocoa
+import SwiftUI
 
-class AppModel: CustomStringConvertible {
+class AppModel: BindableObject, CustomStringConvertible {
+    enum ModeSwitchSetting {
+        case auto
+        case light
+    }
+
     let didChange = Signal()
 
     let name: String
@@ -16,6 +22,22 @@ class AppModel: CustomStringConvertible {
     var icon: NSImage?
     var bundleIdentifier: String?
     var requiresLightMode: Bool = false
+
+    var modeSwitchSetting: ModeSwitchSetting {
+        get {
+            requiresLightMode ? .light : .auto
+        }
+
+        set {
+            guard let bundleIdentifier = bundleIdentifier else {
+                fatalError("No bundleIdentifier set")
+            }
+
+            requiresLightMode = (newValue == .light)
+            print("Mode for \(bundleIdentifier) = \(requiresLightMode)")
+            Defaults().setRequiresLightMode(requiresLightMode, for: bundleIdentifier)
+        }
+    }
 
     init(bundleURL: URL) {
         self.name = bundleURL.deletingPathExtension().lastPathComponent
