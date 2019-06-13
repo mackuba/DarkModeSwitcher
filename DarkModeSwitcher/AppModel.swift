@@ -21,7 +21,24 @@ class AppModel: BindableObject, CustomStringConvertible {
     let bundleURL: URL
     var icon: NSImage?
     var bundleIdentifier: String?
+
     var requiresLightMode: Bool = false
+
+    var needsRestart: Bool = false {
+        didSet {
+            didChange.send(())
+        }
+    }
+
+    var isRunning: Bool = false {
+        didSet {
+            if !isRunning {
+                needsRestart = false
+            }
+
+            didChange.send(())
+        }
+    }
 
     var modeSwitchSetting: ModeSwitchSetting {
         get {
@@ -34,6 +51,7 @@ class AppModel: BindableObject, CustomStringConvertible {
             }
 
             requiresLightMode = (newValue == .light)
+            needsRestart = isRunning
             print("Mode for \(bundleIdentifier) = \(requiresLightMode)")
             Defaults().setRequiresLightMode(requiresLightMode, for: bundleIdentifier)
         }

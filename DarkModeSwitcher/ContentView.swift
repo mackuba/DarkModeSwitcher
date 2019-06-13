@@ -48,6 +48,16 @@ struct AppRowView: View {
 
             Spacer()
 
+            if app.needsRestart {
+                Image(nsImage: NSImage(named: "NSCaution")!)
+                    .resizable()
+                    .frame(width: 28, height: 28)
+                    .padding(.trailing, 5)
+                    .accessibility(
+                        label: Text("App requires restart")
+                    )
+            }
+
             SegmentedControl(selection: $app.modeSwitchSetting) {
                 Text("Auto").tag(AppModel.ModeSwitchSetting.auto)
                 Text("Light").tag(AppModel.ModeSwitchSetting.light)
@@ -67,6 +77,7 @@ struct ContentView_Previews : PreviewProvider {
                 bundleURL: URL(string: "/Applications/\($0).app")!
             )
             app.icon = NSImage(named: app.name.lowercased())
+            app.needsRestart = (app.name == "Slack")
             return app
         }
 

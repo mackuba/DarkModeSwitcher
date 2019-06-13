@@ -15,6 +15,8 @@ typealias Signal = PassthroughSubject<Void, Never>
 class AppList: BindableObject {
     let didChange = Signal()
 
+    var runningAppsObservation: NSKeyValueObservation?
+
     var apps: [AppModel] = [] {
         didSet {
             didChange.send(())
@@ -30,6 +32,26 @@ class AppList: BindableObject {
 
             DispatchQueue.main.async {
                 self.apps = sortedApps
+                self.startObservingRunningApps()
+            }
+        }
+    }
+
+    func startObservingRunningApps() {
+        runningAppsObservation = NSWorkspace.shared.observe(\.runningApplications) { _, _ in
+            self.updateRunningApps()
+        }
+
+        updateRunningApps()
+    }
+
+    func updateRunningApps() {
+        let runningApps = NSWorkspace.shared.runningApplications
+        let runningIds = Set(runningApps.compactMap({ $0.bundleIdentifier }))
+
+        for app in self.apps {
+            if let bundleId = app.bundleIdentifier {
+                app.isRunning = runningIds.contains(bundleId)
             }
         }
     }
