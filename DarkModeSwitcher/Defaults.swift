@@ -33,19 +33,13 @@ class Defaults {
         return nil
     }
 
-    func setRequiresLightMode(_ required: Bool, for bundleIdentifier: String) {
+    func setRequiresLightMode(_ lightMode: Bool, for bundleIdentifier: String) {
         do {
-            if required {
-                try shellOut(
-                    to: "defaults",
-                    arguments: ["write", bundleIdentifier, RequiresAquaSetting, "-bool", "true"]
-                )
-            } else {
-                try shellOut(
-                    to: "defaults",
-                    arguments: ["delete", bundleIdentifier, RequiresAquaSetting]
-                )
-            }
+            let arguments = lightMode ?
+                ["write", bundleIdentifier, RequiresAquaSetting, "-bool", "true"] :
+                ["delete", bundleIdentifier, RequiresAquaSetting]
+
+            try shellOut(to: "defaults", arguments: arguments)
         } catch let error {
             print("Error setting default for \(bundleIdentifier): \(error)")
         }
