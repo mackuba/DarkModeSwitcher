@@ -12,11 +12,55 @@ private let iconSize: CGFloat = 32
 
 struct ContentView: View {
     @ObjectBinding var appList: AppList
+    @State var query: String = ""
 
     var body: some View {
-        List(appList.apps.identified(by: \.bundleURL)) { app in
-            AppRowView(app: app)
+        let matchingApps = query.isEmpty ?
+            appList.apps :
+            appList.apps.filter({
+                $0.name.lowercased().contains(query.lowercased())
+            })
+
+        return VStack(spacing: 0) {
+            SearchBar(query: $query)
+
+            Divider()
+
+            List(matchingApps.identified(by: \.bundleURL)) { app in
+                AppRowView(app: app)
+            }
         }
+    }
+}
+
+struct SearchBar: View {
+    @Binding var query: String
+
+    var clearIcon: NSImage {
+        NSImage(named: "NSStopProgressFreestandingTemplate")!
+    }
+
+    var body: some View {
+        HStack(spacing: 0) {
+            Spacer()
+
+            Text("🔍")
+
+            TextField($query, placeholder: Text("Search"))
+                .textFieldStyle(.roundedBorder)
+                .padding(8)
+
+            Button(action: clearQuery) {
+                Image(nsImage: clearIcon)
+                    .opacity(query.count == 0 ? 0.5 : 1.0)
+            }
+            .disabled(query.count == 0)
+            .padding(.trailing, 8)
+        }
+    }
+
+    func clearQuery() {
+        self.query = ""
     }
 }
 
