@@ -115,14 +115,19 @@ struct AppRowView: View {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        let names = ["Firefox", "Pages", "Slack", "Twitter"]
+        let names = ["App Store", "Music", "Numbers", "Photos", "Safari"]
         let appList = AppList()
         appList.apps = names.map {
             let app = AppModel(
-                bundleURL: URL(string: "/Applications/\($0).app")!
+                bundleURL: URL(fileURLWithPath: "/System/Applications/\($0).app")
             )
             app.bundleIdentifier = "app.\($0)"
-            app.icon = NSImage(named: app.name.lowercased())
+            app.icon = NSImage(
+                contentsOf: app.bundleURL
+                    .appendingPathComponent("Contents")
+                    .appendingPathComponent("Resources")
+                    .appendingPathComponent("AppIcon.icns")
+            )
             app.needsRestart = (app.name == "Slack")
             return app
         }
