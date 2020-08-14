@@ -9,13 +9,13 @@
 import Cocoa
 import SwiftUI
 
-class AppModel: BindableObject, CustomStringConvertible {
+class AppModel: ObservableObject, CustomStringConvertible {
     enum ModeSwitchSetting {
         case auto
         case light
     }
 
-    let didChange = Signal()
+    let objectWillChange = Signal()
 
     let name: String
     let bundleURL: URL
@@ -31,18 +31,19 @@ class AppModel: BindableObject, CustomStringConvertible {
     }
 
     var needsRestart: Bool = false {
-        didSet {
-            didChange.send(())
+        willSet {
+            objectWillChange.send()
         }
     }
 
     var isRunning: Bool = false {
+        willSet {
+            objectWillChange.send()
+        }
         didSet {
             if !isRunning {
                 needsRestart = false
             }
-
-            didChange.send(())
         }
     }
 

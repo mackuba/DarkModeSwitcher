@@ -11,7 +11,7 @@ import SwiftUI
 private let iconSize: CGFloat = 32
 
 struct ContentView: View {
-    @ObjectBinding var appList: AppList
+    @ObservedObject var appList: AppList
     @State var query: String = ""
 
     var body: some View {
@@ -26,7 +26,7 @@ struct ContentView: View {
 
             Divider()
 
-            List(matchingApps.identified(by: \.bundleURL)) { app in
+            List(matchingApps, id: \.bundleURL) { app in
                 AppRowView(app: app)
             }
         }
@@ -46,8 +46,8 @@ struct SearchBar: View {
 
             Text("🔍")
 
-            TextField($query, placeholder: Text("Search"))
-                .textFieldStyle(.roundedBorder)
+            TextField("Search", text: $query)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(8)
 
             Button(action: clearQuery) {
@@ -71,12 +71,12 @@ struct MissingAppIcon: View {
             .padding(.all, 2)
             .frame(width: iconSize, height: iconSize)
             .opacity(0.5)
-            .overlay(Text("?").color(.white).opacity(0.8))
+            .overlay(Text("?").foregroundColor(.white).opacity(0.8))
     }
 }
 
 struct AppRowView: View {
-    @ObjectBinding var app: AppModel
+    @ObservedObject var app: AppModel
 
     var body: some View {
         HStack {
@@ -102,10 +102,11 @@ struct AppRowView: View {
                     )
             }
 
-            SegmentedControl(selection: $app.modeSwitchSetting) {
+            Picker("", selection: $app.modeSwitchSetting) {
                 Text("Auto").tag(AppModel.ModeSwitchSetting.auto)
                 Text("Light").tag(AppModel.ModeSwitchSetting.light)
             }
+            .pickerStyle(SegmentedPickerStyle())
             .disabled(app.bundleIdentifier == nil)
             .frame(width: 200)
         }

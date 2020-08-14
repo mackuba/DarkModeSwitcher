@@ -12,16 +12,10 @@ import SwiftUI
 
 typealias Signal = PassthroughSubject<Void, Never>
 
-class AppList: BindableObject {
-    let didChange = Signal()
-
+class AppList: ObservableObject {
     var runningAppsObservation: NSKeyValueObservation?
 
-    var apps: [AppModel] = [] {
-        didSet {
-            didChange.send(())
-        }
-    }
+    @Published var apps: [AppModel] = []
 
     func loadApps() {
         DispatchQueue.global(qos: .userInitiated).async {

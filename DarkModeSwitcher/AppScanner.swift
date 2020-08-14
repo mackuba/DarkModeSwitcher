@@ -64,6 +64,7 @@ class AppScanner {
             let defaultsSetting = Defaults().checkRequiresLightMode(for: info.bundleIdentifier)
 
             DispatchQueue.main.async {
+                app.objectWillChange.send()
                 app.bundleIdentifier = info.bundleIdentifier
 
                 if let iconFileName = info.iconFileName {
@@ -82,8 +83,6 @@ class AppScanner {
                 }
 
                 print("Updated app info: \(app)")
-
-                app.didChange.send(())
             }
         } catch let error {
             print("Could not load app info for \(app.name): \(error)")
