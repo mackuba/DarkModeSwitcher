@@ -14,14 +14,18 @@ struct ContentView: View {
     @ObservedObject var appList: AppList
     @State var query: String = ""
 
-    var body: some View {
-        let matchingApps = query.isEmpty ?
-            appList.apps :
-            appList.apps.filter({
+    var matchingApps: [AppModel] {
+        if query.isEmpty {
+            return appList.apps
+        } else {
+            return appList.apps.filter({
                 $0.name.lowercased().contains(query.lowercased())
             })
+        }
+    }
 
-        return VStack(spacing: 0) {
+    var body: some View {
+        VStack(spacing: 0) {
             SearchBar(query: $query)
 
             Divider()

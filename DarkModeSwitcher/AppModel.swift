@@ -15,8 +15,6 @@ class AppModel: ObservableObject, CustomStringConvertible {
         case light
     }
 
-    let objectWillChange = Signal()
-
     let name: String
     let bundleURL: URL
     var icon: NSImage?
@@ -30,16 +28,9 @@ class AppModel: ObservableObject, CustomStringConvertible {
         }
     }
 
-    var needsRestart: Bool = false {
-        willSet {
-            objectWillChange.send()
-        }
-    }
+    @Published var needsRestart: Bool = false
 
-    var isRunning: Bool = false {
-        willSet {
-            objectWillChange.send()
-        }
+    @Published var isRunning: Bool = false {
         didSet {
             if !isRunning {
                 needsRestart = false
