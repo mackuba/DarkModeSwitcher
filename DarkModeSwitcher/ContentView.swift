@@ -34,6 +34,7 @@ struct ContentView: View {
                 AppRowView(app: app)
             }
         }
+        .frame(minWidth: 450, minHeight: 300)
     }
 }
 
