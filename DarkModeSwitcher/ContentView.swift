@@ -62,6 +62,7 @@ struct SearchBar: View {
             .disabled(query.count == 0)
             .padding(.trailing, 8)
         }
+        .onExitCommand(perform: clearQuery)
     }
 
     func clearQuery() {
