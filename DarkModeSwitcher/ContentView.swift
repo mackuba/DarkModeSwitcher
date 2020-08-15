@@ -113,7 +113,6 @@ struct AppRowView: View {
     }
 }
 
-#if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
         let names = ["App Store", "Music", "Numbers", "Photos", "Safari"]
@@ -136,4 +135,3 @@ struct ContentView_Previews : PreviewProvider {
         return ContentView(appList: appList)
     }
 }
-#endif
