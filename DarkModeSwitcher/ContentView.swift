@@ -137,6 +137,12 @@ struct ContentView_Previews : PreviewProvider {
             return app
         }
 
-        return ContentView(appList: appList)
+        return Group {
+            AppRowView(app: appList.apps[0])
+                .previewLayout(.fixed(width: 500, height: 50))
+                .padding(.all, 5)
+
+            ContentView(appList: appList)
+        }
     }
 }
